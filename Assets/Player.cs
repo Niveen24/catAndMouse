@@ -48,16 +48,24 @@ public class Player : MonoBehaviour
     private void handleInput()
     {
         xInput = Input.GetAxisRaw("Horizontal");                          //gets the horizontal input
-        if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }                 //GetKey returns t when key is held down, GetKeyDown returns t when key is pressed, GetKeyUp returns t when key is release
+        if (Input.GetKeyDown(KeyCode.Space)) { attemptJump(); }                 //GetKey returns t when key is held down, GetKeyDown returns t when key is pressed, GetKeyUp returns t when key is release
+        if (Input.GetKeyDown(KeyCode.Mouse0)) { attemptAttack(); }
 
+    }
 
+    private void attemptAttack()
+    {
+        if(isGrounded)
+        {
+            anim.SetTrigger("attack");
+        }
     }
     private void handleMovement()
     {
         rb.linearVelocity = new Vector2(xInput * moveSpeed, rb.linearVelocity.y);               //y has to be .linearVelocity.y to make sure it stays same; if set to 0 it will resist gravity
     }
 
-    private void Jump()
+    private void attemptJump()
     {
         if (isGrounded)
         {
